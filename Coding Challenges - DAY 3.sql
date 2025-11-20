@@ -1,24 +1,24 @@
--- 1️.Create Database
+-- Create Database
 CREATE DATABASE ECommerceDB;
 USE ECommerceDB;
 
+-- create Product table
 CREATE TABLE Product (
     product_id INT PRIMARY KEY,
     product_name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) CHECK (price > 0)
 );
 
--- 3️.Create Sales Table
+-- Create Sales Table
 CREATE TABLE Sales (
-    sale_id INT PRIMARY KEY,-- 2️.Create Product Table
-
+    sale_id INT PRIMARY KEY,
     product_id INT,
     quantity INT CHECK (quantity > 0),
     sale_amount DECIMAL(10,2) CHECK (sale_amount > 0),
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
 
--- 4️.Insert Sample Data into Product Table
+-- Insert Sample Data into Product Table
 INSERT INTO Product (product_id, product_name, price) VALUES
 (1, 'Laptop', 85000.00),
 (2, 'Smartphone', 45000.00),
@@ -28,7 +28,7 @@ INSERT INTO Product (product_id, product_name, price) VALUES
 (6, 'Monitor', 15000.00),
 (7, 'Webcam', 3500.00);
 
--- 5️.Insert Sample Data into Sales Table
+-- Insert Sample Data into Sales Table
 INSERT INTO Sales (sale_id, product_id, quantity, sale_amount) VALUES
 (1, 1, 2, 170000.00),
 (2, 2, 3, 135000.00),
@@ -38,12 +38,12 @@ INSERT INTO Sales (sale_id, product_id, quantity, sale_amount) VALUES
 (6, 6, 2, 30000.00),
 (7, 7, 4, 14000.00);
 
--- 6. order by and limit
+-- order by and limit
 SELECT * FROM Product
 ORDER BY price DESC
 LIMIT 3;
 
--- 7. Aggregate functions
+-- Aggregate functions
 SELECT COUNT(*) AS total_sales_records FROM Sales;
 SELECT SUM(sale_amount) AS total_sales FROM Sales;
 SELECT AVG(sale_amount) AS average_sale FROM Sales;
@@ -55,6 +55,7 @@ SELECT product_id, SUM(sale_amount) AS total_sales FROM Sales
 GROUP BY product_id
 HAVING total_sales;
 
+-- Rank 
 SELECT product_id, product_name ,price,
 RANK() OVER (ORDER BY price DESC) AS  procuct_rank
 FROM Product;
